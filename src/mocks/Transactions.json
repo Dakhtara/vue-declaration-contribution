@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "type": "credit",
+    "label": "Virement ID City",
+    "price": 70000,
+    "dateTime": "2021-10-10T10:00:00",
+    "slices": null,
+    "splittedTransaction": null
+  },
+  {
+    "id": 2,
+    "type": "debit",
+    "label": "Ipad Air",
+    "price": 60000,
+    "dateTime": "2021-10-12T12:13:00",
+    "slices": null,
+    "splittedTransaction": null
+  }
+]
