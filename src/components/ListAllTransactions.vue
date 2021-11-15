@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import {Ref, ref} from 'vue'
 import {transactionManager} from "../managers/TransactionManager";
-import Transaction from "../models/Transaction";
-import TransactionType from "./TransactionType.vue";
-import moment from "moment";
-import DateTime from "./DateTime.vue";
+import TransactionModel from "../models/Transaction";
+import Transaction from "./Transaction.vue";
 // defineProps<{ msg: string }>()
 
 const count = ref(0)
-let transactions: Ref<Transaction[]> = ref([]);
+let transactions: Ref<TransactionModel[]> = ref([]);
 transactionManager.fetchAll().then((fetched) => transactions.value = fetched);
 
 </script>
@@ -18,10 +16,7 @@ transactionManager.fetchAll().then((fetched) => transactions.value = fetched);
 
   <ul>
     <li v-for="transaction in transactions">
-      <TransactionType color="red" :type="transaction.type" />
-      {{transaction.label}}
-      {{$filters.formatCurrency(transaction.price)}}
-      <DateTime :date="transaction.dateTime" format="D/M/YYYY HH:mm:ss" />
+      <Transaction :transaction="transaction" />
     </li>
   </ul>
 </template>

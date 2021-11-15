@@ -21,10 +21,10 @@ if (props.type === 'credit') {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .transaction-type {
+  @apply rounded;
   display: inline-block;
-  border-radius: 5px;
   padding: 4px 8px;
   font-size: 0.8rem;
   color: #000;

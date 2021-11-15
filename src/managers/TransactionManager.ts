@@ -2,9 +2,6 @@ import Transaction from "../models/Transaction";
 import mockJson from '../mocks/Transactions.json';
 
 class TransactionManager {
-
-    isMocked = true;
-
     async fetchAll(): Promise<Transaction[]>
     {
         let transactionJson;
