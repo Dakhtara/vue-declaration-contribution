@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "moment": "^2.29.1",
+    "rxjs": "^7.4.0",
     "sass": "^1.43.4",
     "tailwindcss": "^2.2.19",
     "vue": "^3.2.16"
