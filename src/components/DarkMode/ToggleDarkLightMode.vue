@@ -1,19 +1,21 @@
 <template>
   <div class="theme-switch-wrapper">
+    <sunSvg class="svg svg-sun" />
     <label class="theme-switch" for="change-theme-checkbox">
       <input id="change-theme-checkbox" type="checkbox" v-on:change="changeMode" :checked="darkMode === 'dark'"
              value="darkMode"/>
       <div class="slider round"></div>
     </label>
-    <em>Enable Dark Mode!</em>
+    <moonSvg class="svg svg-moon" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import {ref, Ref} from "vue";
+import sunSvg from '../../svg/sun.svg';
+import moonSvg from '../../svg/moon.svg';
 
 let darkMode: Ref<string> = ref<string>('')
-
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
   document.documentElement.classList.add('dark')
   darkMode.value = 'dark'
@@ -37,6 +39,18 @@ function changeMode(): void {
 </script>
 
 <style lang="scss">
+@import "src/scss/variables";
+
+.svg {
+  width: 24px;
+  fill: $light-primary-text-color;
+}
+
+.dark {
+  .svg {
+    fill: $dark-primary-text-color;
+  }
+}
 .theme-switch-wrapper {
   display: flex;
   align-items: center;
@@ -52,6 +66,7 @@ function changeMode(): void {
   height: 24px;
   position: relative;
   width: 40px;
+  margin: 0 4px;
 }
 
 .theme-switch input {
@@ -78,10 +93,6 @@ function changeMode(): void {
   position: absolute;
   transition: .3s;
   width: 17px;
-}
-
-input:checked + .slider {
-  background-color: #66bb6a;
 }
 
 input:checked + .slider:before {

@@ -2,9 +2,12 @@
   <div class="login-container">
 
     <div class="login-box">
+      <div class="alert alert-error" v-show="errorAuth">
+        <span>{{errorAuth}}</span>
+      </div>
       <form class="login-form" @submit.prevent="authenticate()">
         <InputField label="Identifiant" v-model="username" type="text"/>
-        <InputField v-model="password" label="Mot de passe" type="password"/>
+        <InputField  label="Mot de passe" v-model="password" type="password"/>
 
         <input type="submit" class="btn btn-primary btn-full" value="Connexion"/>
       </form>
@@ -21,12 +24,20 @@
 import {ref, Ref} from "vue";
 import ToggleDarkLightMode from "../components/DarkMode/ToggleDarkLightMode.vue";
 import InputField from "../components/InputField.vue";
+import AuthProvider, {ErrorAuth} from "../security/AuthProvider";
 
 let username: Ref<string> = ref<string>('')
 let password: Ref<string> = ref<string>('')
+let errorAuth: Ref<string|null> = ref<string|null>(null)
 
-function authenticate() {
-  console.log(username.value, password.value)
+async function authenticate() {
+  let authProvider: AuthProvider = new AuthProvider()
+
+  let isAuth: true|ErrorAuth = await authProvider.authenticate(username.value, password.value)
+  if (isAuth !== true) {
+    errorAuth.value = isAuth.message
+    password.value = ''
+  }
 }
 
 </script>
