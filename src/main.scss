@@ -1,7 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'scss/_variables.scss';
+@import "scss/_form.scss";
 
 body {
   transition: background-color ease-in .2s, color ease-in .2s;
 }
+
+.bg-white-light {
+  background: $light-background-color;
+}
+
+.btn {
+  border-radius: 3px;
+  padding: 8px 12px;
+  cursor: pointer;
+
+  &.btn-full {
+    width: 100%;
+  }
+}
+
+.btn-primary {
+  background-color: $dark-btn-primary-color;
+  color: $dark-primary-text-color;
+}
+
