@@ -11,29 +11,19 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, Ref} from "vue";
 import sunSvg from '../../svg/sun.svg';
 import moonSvg from '../../svg/moon.svg';
+import useDarkMode from "../../functions/useDarkMode";
+import {Ref} from "vue";
 
-let darkMode: Ref<string> = ref<string>('')
+let {darkMode, changeMode} = useDarkMode()
+
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
   document.documentElement.classList.add('dark')
   darkMode.value = 'dark'
 } else {
   document.documentElement.classList.remove('dark')
   darkMode.value = 'light'
-}
-
-function changeMode(): void {
-  if (darkMode.value === 'dark') {
-    document.documentElement.classList.remove('dark')
-    darkMode.value = 'light'
-    localStorage.theme = 'light'
-  } else {
-    document.documentElement.classList.add('dark')
-    darkMode.value = 'dark'
-    localStorage.theme = 'dark'
-  }
 }
 
 </script>

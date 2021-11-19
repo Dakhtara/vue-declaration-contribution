@@ -11,7 +11,10 @@
 
         <input type="submit" class="btn btn-primary btn-full" value="Connexion"/>
       </form>
-
+        <div class="test-iframe">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/G-Mu2WiaSjc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    <button @click="changeDisplay">Change display</button>
       <a>Mot de passe oublié ?</a>
     </div>
     <toggle-dark-light-mode class="toggle-login"/>
@@ -20,7 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-
 import {ref, Ref} from "vue";
 import ToggleDarkLightMode from "../components/DarkMode/ToggleDarkLightMode.vue";
 import InputField from "../components/InputField.vue";
