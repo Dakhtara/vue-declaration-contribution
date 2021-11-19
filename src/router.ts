@@ -6,6 +6,7 @@ import AuthGuard from "./security/AuthGuard";
 
 const routes = [
     {path: '/login', component: Login},
+    {path: '/', redirect: '/dashboard'},
     {path: '/dashboard', component: Dashboard},
 ]
 
