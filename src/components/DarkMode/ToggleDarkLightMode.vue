@@ -31,7 +31,7 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
 @import "src/scss/variables";
 
 .svg {
-  width: 24px;
+  width: 20px;
   fill: $light-primary-text-color;
 }
 

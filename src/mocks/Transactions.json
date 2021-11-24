@@ -18,6 +18,24 @@
     "splittedTransaction": null
   },
   {
+    "id": 5,
+    "type": "debit",
+    "label": "T1 2021",
+    "price": 60000,
+    "dateTime": "2021-01-12T12:13:00",
+    "slices": null,
+    "splittedTransaction": null
+  },
+  {
+    "id": 4,
+    "type": "debit",
+    "label": "T2",
+    "price": 60000,
+    "dateTime": "2021-05-12T12:13:00",
+    "slices": null,
+    "splittedTransaction": null
+  },
+  {
     "id": 3,
     "type": "debit",
     "label": "Iphone 12",
