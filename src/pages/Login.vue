@@ -3,19 +3,15 @@
 
     <div class="login-box">
       <div class="alert alert-error" v-show="errorAuth">
-        <span>{{errorAuth}}</span>
+        <span>{{ errorAuth }}</span>
       </div>
       <form class="login-form" @submit.prevent="authenticate()">
         <InputField label="Identifiant" v-model="username" type="text"/>
-        <InputField  label="Mot de passe" v-model="password" type="password"/>
+        <InputField label="Mot de passe" v-model="password" type="password"/>
 
         <input type="submit" class="btn btn-primary btn-full" value="Connexion"/>
       </form>
-        <div class="test-iframe">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/G-Mu2WiaSjc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    <button @click="changeDisplay">Change display</button>
-      <a>Mot de passe oublié ?</a>
+<!--      <a>Mot de passe oublié ?</a>-->
     </div>
     <toggle-dark-light-mode class="toggle-login"/>
   </div>
@@ -27,16 +23,20 @@ import {ref, Ref} from "vue";
 import ToggleDarkLightMode from "../components/DarkMode/ToggleDarkLightMode.vue";
 import InputField from "../components/InputField.vue";
 import AuthProvider, {ErrorAuth} from "../security/AuthProvider";
+import {useRouter} from "vue-router";
 
 let username: Ref<string> = ref<string>('')
 let password: Ref<string> = ref<string>('')
-let errorAuth: Ref<string|null> = ref<string|null>(null)
+let errorAuth: Ref<string | null> = ref<string | null>(null)
+const router = useRouter()
 
 async function authenticate() {
   let authProvider: AuthProvider = new AuthProvider()
 
-  let isAuth: true|ErrorAuth = await authProvider.authenticate(username.value, password.value)
-  if (isAuth !== true) {
+  let isAuth: true | ErrorAuth = await authProvider.authenticate(username.value, password.value)
+  if (isAuth === true) {
+    router.push({path: '/dashboard'})
+  } else {
     errorAuth.value = isAuth.message
     password.value = ''
   }

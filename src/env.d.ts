@@ -9,6 +9,7 @@ declare module '*.vue' {
 
 interface ImportMetaEnv extends Readonly<Record<string, string>> {
   readonly VITE_USE_MOCK: string
+  readonly VITE_AXIOS_BASEURL: string
 }
 
 interface ImportMeta {

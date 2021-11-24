@@ -17,7 +17,6 @@ const router = VueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
     let authGuard = AuthGuard
-    console.log(authGuard.isAuthenticated())
     if (to.path !== '/login' && !authGuard.isAuthenticated()) {
         next({path: '/login'})
     } else {

@@ -14,7 +14,6 @@
 import sunSvg from '../../svg/sun.svg';
 import moonSvg from '../../svg/moon.svg';
 import useDarkMode from "../../functions/useDarkMode";
-import {Ref} from "vue";
 
 let {darkMode, changeMode} = useDarkMode()
 
