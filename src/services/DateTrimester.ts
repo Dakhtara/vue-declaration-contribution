@@ -2,8 +2,8 @@ import moment, {Moment} from "moment";
 class DateTrimesterService {
 
     getStartTrimester(date: Date): Moment {
-        let curMonth: Moment = moment(date)
-        let quarter: number = curMonth.quarter()
+        const curMonth: Moment = moment(date)
+        const quarter: number = curMonth.quarter()
 
         let startTrimester: number = 1
         if (quarter === 1) {
@@ -17,6 +17,21 @@ class DateTrimesterService {
         }
 
         return moment(new Date(date.getFullYear(), startTrimester - 1, 1))
+    }
+
+    getTrimesterAsString(date: Date|Moment): string
+    {
+        if (date instanceof Date) {
+            date = moment(date)
+        }
+        const quarter: number = date.quarter()
+
+        let prefix = 'ème'
+        if (quarter === 1) {
+            prefix = 'er'
+        }
+
+        return `${quarter}${prefix} trimestre de ${date.year()}`
     }
 }
 let DateTrimester;
