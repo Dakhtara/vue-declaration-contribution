@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {ref, Ref} from "vue";
 import Transaction from "../models/Transaction";
 
@@ -35,6 +34,5 @@ if (props.transaction !== undefined) {
   width: 42px;
   height: 42px;
   font-size: 0.8rem;
-  color: #000;
 }
 </style>

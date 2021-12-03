@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import {Ref, ref} from 'vue'
 import {transactionManager, Trimester} from "../managers/TransactionManager";
-import TransactionModel from "../models/Transaction";
 import Transaction from "./Transaction.vue";
-import {Moment} from "moment";
 import DateTrimester from "../services/DateTrimester";
-// defineProps<{ msg: string }>()
+import {DateTime} from "luxon";
 
-const count = ref(0)
 let trimesters: Ref<Trimester[]> = ref([]);
 transactionManager.fetchAllByTrimester().then((fetched) => trimesters.value = fetched);
-const toTrimesterString = (date: Date|Moment): string => {
+const toTrimesterString = (date: Date|DateTime): string => {
   return DateTrimester.getTrimesterAsString(date)
 }
 </script>

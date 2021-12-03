@@ -5,6 +5,8 @@
     <h1>Déclaration des contributions URSSAF</h1>
     <list-all-transactions/>
 
+    <trimester-details :date="now" />
+
     <button class="btn btn-primary" @click="logOut">Déconnexion</button>
   </div>
 </template>
@@ -13,10 +15,13 @@
 import ListAllTransactions from "../components/ListAllTransactions.vue";
 import ToggleDarkLightMode from "../components/DarkMode/ToggleDarkLightMode.vue";
 import AuthProvider from "../security/AuthProvider";
+import TrimesterDetails from "./TrimesterDetails.vue";
 
 
 function logOut() {
   let authProvider = new AuthProvider()
       authProvider.logOut()
 }
+
+let now = new Date()
 </script>

@@ -1,5 +1,4 @@
 import SplittedTransaction from "./SplittedTransaction";
-import {forEach} from "lodash";
 
 export enum TransactionTypeEnum {
     credit = "credit",

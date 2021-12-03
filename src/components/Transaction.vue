@@ -8,7 +8,7 @@
     <span class="price-main" :style="'color:' + transaction.getColoryType()">{{formatPrice(transaction.price, transaction.type)}}</span>
     <span class="price-remaining" v-if="transaction.slices > 0">{{formatPrice(transaction.pendingSlices(), 'debit' )}} restant</span>
   </div>
-  <DateTime :date="transaction.dateTime" format="DD/MM/YYYY HH:mm:ss" />
+  <DateTime :date="transaction.dateTime" format="ddd DD/MM/YYYY" />
 </div>
 </template>
 
@@ -17,13 +17,23 @@ import Transaction, {TransactionTypeEnum} from "../models/Transaction";
 import TransactionType from "./TransactionType.vue";
 import DateTime from "./DateTime.vue";
 import CurrencyFormatter from "../services/CurrencyFormatter";
+import SplittedTransaction from "../models/SplittedTransaction";
 
-defineProps<{transaction:Transaction}>();
+const props = defineProps<{transaction:Transaction}>();
 
 const currencyFormatter = CurrencyFormatter.getInstance();
 let formatPrice = (price: number, isCredit : TransactionTypeEnum = TransactionTypeEnum.credit): string => {
   const prefix = isCredit == TransactionTypeEnum.credit ? '+': '-'
   return prefix + ' ' + currencyFormatter.formatBasic(price)
+}
+
+if (props.transaction.slices !== null) {
+  props.transaction.splittedTransaction?.some((splittedTransaction: SplittedTransaction) => {
+    if (!splittedTransaction.isCounted) {
+      props.transaction.price = splittedTransaction.amount
+      return true
+    }
+  })
 }
 </script>
 

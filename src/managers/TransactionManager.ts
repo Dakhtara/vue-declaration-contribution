@@ -3,9 +3,9 @@ import mockJson from '../mocks/Transactions.json';
 import axios, {AxiosResponse} from 'axios';
 import {find, orderBy} from "lodash";
 import DateTrimester from "../services/DateTrimester";
-import moment, {Moment} from "moment";
+import {DateTime} from "luxon";
 export interface Trimester {
-    date: Moment;
+    date: DateTime;
     transactions: Transaction[]
 }
 
@@ -27,9 +27,10 @@ class TransactionManager {
         transactions = orderBy(transactions, ['dateTime'], ['desc'])
         transactions.forEach((transaction) => {
             let trimesterDate = DateTrimester.getStartTrimester(transaction.dateTime)
+
             let trimester: Trimester|undefined = find(trimesters, (o) => {
-                let dateTrimester = moment(o.date).format('D/M/YYYY')
-                return dateTrimester === trimesterDate.format('D/M/YYYY')
+                let dateTrimester = o.date.toFormat('D/M/YYYY')
+                return dateTrimester === trimesterDate.toFormat('D/M/YYYY')
             })
             if (trimester === undefined) {
                 trimester = {date: trimesterDate, transactions: []}
@@ -40,6 +41,16 @@ class TransactionManager {
         })
         //We should use groupBy and orderBy
         return trimesters
+    }
+
+    async fetchByTrimester(date: Date): Promise<Transaction[]>
+    {
+        if (import.meta.env.VITE_USE_MOCK == 'true') {
+            return mockJson.map((el: Object) => new Transaction(el));
+        } else {
+            let transactionJson: [] = await axios.get('/api/transactions', {params: {date: date.toISOString()}}).then((res: AxiosResponse) => res.data);
+            return transactionJson.map((el: Object) => new Transaction(el));
+        }
     }
 
     async save(transaction: Transaction): Promise<boolean>

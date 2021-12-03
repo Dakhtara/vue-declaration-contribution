@@ -1,18 +1,19 @@
 <template>
-  <time :datetime="formatted">{{formatted}}</time>
+  <time :datetime="isoDate">{{formatted}}</time>
 </template>
 
 <script setup lang="ts">
-import moment from "moment";
-import {Ref, ref} from "vue";
+import {DateTime as DateTimeLuxon }  from 'luxon';
 const props =  defineProps({
   date: Date,
   format: String
 })
 
-let formatted: Ref<String> = ref("");
+let formatted: string
+let isoDate: string
 if (props.date !== undefined && props.format !== undefined) {
-  formatted.value = moment(props.date).format(props.format)
+  formatted = DateTimeLuxon.fromJSDate(props.date).toLocaleString(DateTimeLuxon.DATE_MED_WITH_WEEKDAY)
+  isoDate = DateTimeLuxon.fromJSDate(props.date).toISO()
 }
 
 </script>
