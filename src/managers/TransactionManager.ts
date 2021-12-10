@@ -43,12 +43,12 @@ class TransactionManager {
         return trimesters
     }
 
-    async fetchByTrimester(date: Date): Promise<TransactionModel[]>
+    async fetchByTrimester(date: DateTime): Promise<TransactionModel[]>
     {
         if (import.meta.env.VITE_USE_MOCK == 'true') {
             return mockJson.map((el: Object) => new TransactionModel(el));
         } else {
-            let transactionJson: [] = await axios.get('/api/transactions', {params: {date: date.toISOString()}}).then((res: AxiosResponse) => res.data);
+            let transactionJson: [] = await axios.get('/api/transactions', {params: {date: date.toISO()}}).then((res: AxiosResponse) => res.data);
             return transactionJson.map((el: Object) => new TransactionModel(el));
         }
     }
