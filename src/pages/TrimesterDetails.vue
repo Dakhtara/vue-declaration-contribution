@@ -3,34 +3,42 @@
     <h1>{{title}}</h1>
     <p class="trimester-sum">
       Somme à déclarer
-      <span class="trimester-amount-total">{{formatPrice(trimesterAmount)}}  100,00 €</span>
+      <span class="trimester-amount-total">{{formatPrice(trimesterAmount)}}</span>
     </p>
   </div>
   <div class="trimester-transactions">
-    {{trimesterTransaction}}
+    <div v-for="transaction in trimesterTransaction">
+      <Transaction :transaction="transaction" />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import DateTrimester from "../services/DateTrimester";
 import {ref, Ref} from "vue";
-import Transaction from "../models/Transaction";
+import TransactionModel from "../models/TransactionModel";
+import Transaction  from "../components/Transaction.vue";
 import {transactionManager} from "../managers/TransactionManager";
 import TransactionCalculator from "../services/TransactionCalculator";
 import usePriceFormatter from "../functions/usePriceFormatter";
+import {useRoute} from "vue-router";
 
-const props = defineProps<{date: Date}>()
+const route = useRoute()
 
-let title = DateTrimester.getTrimesterAsString(props.date)
-let trimesterTransaction: Ref<Transaction[]> = ref([])
+const trimester: string = route.params.trimester;
+const year: string = route.params.year;
+let date = DateTrimester.getDateByTrimesterAndYear(parseInt(trimester), parseInt(year))
+console.log(date)
+let title = DateTrimester.getTrimesterAsString(date)
+let trimesterTransaction: Ref<TransactionModel[]> = ref([])
 let trimesterAmount: Ref<number> = ref(0)
 
 
 let {formatPrice} = usePriceFormatter()
 
-transactionManager.fetchByTrimester(props.date)
+transactionManager.fetchByTrimester(date)
     .then((transactions) => {trimesterTransaction.value = transactions})
-    .then(() => TransactionCalculator.calculate(trimesterTransaction.value, props.date))
+    .then(() => TransactionCalculator.calculate(trimesterTransaction.value, date))
     .then((amount) => trimesterAmount.value = amount)
 
 
@@ -41,6 +49,4 @@ transactionManager.fetchByTrimester(props.date)
   font-weight: bold;
   color: #D4AB1A;
 }
-
-
 </style>

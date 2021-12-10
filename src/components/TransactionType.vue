@@ -4,11 +4,11 @@
 
 <script setup lang="ts">
 import {ref, Ref} from "vue";
-import Transaction from "../models/Transaction";
+import TransactionModel from "../models/TransactionModel";
 
 const props = defineProps({
   type: String,
-  transaction: Transaction
+  transaction: TransactionModel
 });
 
 let color: Ref<string> = ref('');

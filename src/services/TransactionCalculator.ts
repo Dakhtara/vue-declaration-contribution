@@ -1,14 +1,14 @@
-import Transaction, {TransactionTypeEnum} from "../models/Transaction";
+import TransactionModel, {TransactionTypeEnum} from "../models/TransactionModel";
 import DateTrimester from "./DateTrimester";
 import SplittedTransaction from "../models/SplittedTransaction";
 
 class TransactionCalculatorService
 {
-     async calculate(transactions: Transaction[], trimester: Date): Promise<number> {
+     async calculate(transactions: TransactionModel[], trimester: Date): Promise<number> {
          let amount: number = 0
          let {start, end} = DateTrimester.getStartAndEndTrimester(trimester)
          //Loop over transactions
-         await transactions.forEach((transaction: Transaction) => {
+         await transactions.forEach((transaction: TransactionModel) => {
              if (transaction.slices === null) {
                  if (transaction.type == TransactionTypeEnum.credit) {
                      amount += transaction.price

@@ -1,4 +1,4 @@
-import Transaction from "../models/Transaction";
+import TransactionModel from "../models/TransactionModel";
 import mockJson from '../mocks/Transactions.json';
 import axios, {AxiosResponse} from 'axios';
 import {find, orderBy} from "lodash";
@@ -6,17 +6,17 @@ import DateTrimester from "../services/DateTrimester";
 import {DateTime} from "luxon";
 export interface Trimester {
     date: DateTime;
-    transactions: Transaction[]
+    transactions: TransactionModel[]
 }
 
 class TransactionManager {
-    async fetchAll(): Promise<Transaction[]>
+    async fetchAll(): Promise<TransactionModel[]>
     {
         if (import.meta.env.VITE_USE_MOCK == 'true') {
-            return mockJson.map((el: Object) => new Transaction(el));
+            return mockJson.map((el: Object) => new TransactionModel(el));
         } else {
             let transactionJson: [] = await axios.get('/api/transactions').then((res: AxiosResponse) => res.data);
-            return transactionJson.map((el: Object) => new Transaction(el));
+            return transactionJson.map((el: Object) => new TransactionModel(el));
         }
     }
 
@@ -43,17 +43,17 @@ class TransactionManager {
         return trimesters
     }
 
-    async fetchByTrimester(date: Date): Promise<Transaction[]>
+    async fetchByTrimester(date: Date): Promise<TransactionModel[]>
     {
         if (import.meta.env.VITE_USE_MOCK == 'true') {
-            return mockJson.map((el: Object) => new Transaction(el));
+            return mockJson.map((el: Object) => new TransactionModel(el));
         } else {
             let transactionJson: [] = await axios.get('/api/transactions', {params: {date: date.toISOString()}}).then((res: AxiosResponse) => res.data);
-            return transactionJson.map((el: Object) => new Transaction(el));
+            return transactionJson.map((el: Object) => new TransactionModel(el));
         }
     }
 
-    async save(transaction: Transaction): Promise<boolean>
+    async save(transaction: TransactionModel): Promise<boolean>
     {
         if (import.meta.env.VITE_USE_MOCK == 'true') {
             return true;

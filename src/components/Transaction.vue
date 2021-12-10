@@ -13,13 +13,13 @@
 </template>
 
 <script setup lang="ts">
-import Transaction, {TransactionTypeEnum} from "../models/Transaction";
+import TransactionModel, {TransactionTypeEnum} from "../models/TransactionModel";
 import TransactionType from "./TransactionType.vue";
 import DateTime from "./DateTime.vue";
 import CurrencyFormatter from "../services/CurrencyFormatter";
 import SplittedTransaction from "../models/SplittedTransaction";
 
-const props = defineProps<{transaction:Transaction}>();
+const props = defineProps<{transaction:TransactionModel}>();
 
 const currencyFormatter = CurrencyFormatter.getInstance();
 let formatPrice = (price: number, isCredit : TransactionTypeEnum = TransactionTypeEnum.credit): string => {

@@ -5,7 +5,7 @@ export enum TransactionTypeEnum {
     debit = "debit"
 }
 
-export default class Transaction {
+export default class TransactionModel {
     id: number
     type: TransactionTypeEnum
     label: string
@@ -14,7 +14,7 @@ export default class Transaction {
     slices: number|null
     splittedTransaction: SplittedTransaction[]|null
 
-    constructor(partial: Partial<Transaction>) {
+    constructor(partial: Partial<TransactionModel>) {
         Object.assign(this, partial)
         if (partial.dateTime !== undefined && partial.dateTime !== null) {
             this.dateTime = new Date(partial.dateTime)

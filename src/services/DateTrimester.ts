@@ -1,10 +1,12 @@
 import {DateTime} from "luxon";
 class DateTrimesterService {
 
-    getStartTrimester(date: Date): DateTime
+    getStartTrimester(date: Date|DateTime): DateTime
     {
-        const curMonth: DateTime = DateTime.fromJSDate(date)
-        const quarter: number = curMonth.quarter
+        if (date instanceof Date) {
+            date = DateTime.fromJSDate(date)
+        }
+        const quarter: number = date.quarter
 
         let startTrimester: number = 1
         if (quarter === 1) {
@@ -17,7 +19,39 @@ class DateTrimesterService {
             startTrimester = 10
         }
 
-        return DateTime.fromJSDate(new Date(date.getFullYear(), startTrimester - 1, 1))
+        return DateTime.fromJSDate(new Date(date.year, startTrimester - 1, 1))
+    }
+
+    nextTrimester(date: Date): DateTime
+    {
+        let endTrimester: DateTime = this.getEndTrimester(date)
+
+        return this.getStartTrimester(endTrimester.plus({day: 1}))
+    }
+
+    previousTrimester(date: Date): DateTime
+    {
+        let startTrimester: DateTime = this.getStartTrimester(date)
+
+        return this.getStartTrimester(startTrimester.minus({day: 1}))
+    }
+
+    getDateByTrimesterAndYear(trimester: number, year: number): DateTime
+    {
+        let month: number = 1;
+        switch (trimester) {
+            case 2:
+                month = 4;
+                break;
+            case 3:
+                month = 7;
+                break;
+            case 4:
+                month = 10;
+                break;
+        }
+
+        return DateTime.fromFormat(month + '-'+ year, 'M-yyyy');
     }
 
     getTrimesterAsString(date: Date|DateTime): string
@@ -25,6 +59,7 @@ class DateTrimesterService {
         if (date instanceof Date) {
             date = DateTime.fromJSDate(date)
         }
+        console.log(date)
         const quarter: number = date.quarter
 
         let prefix = 'ème'
@@ -35,10 +70,12 @@ class DateTrimesterService {
         return `${quarter}${prefix} trimestre de ${date.year}`
     }
 
-    getEndTrimester(date: Date): DateTime
+    getEndTrimester(date: Date|DateTime): DateTime
     {
-        const curMonth: DateTime = DateTime.fromJSDate(date)
-        const quarter: number = curMonth.quarter
+        if (date instanceof Date) {
+            date = DateTime.fromJSDate(date)
+        }
+        const quarter: number = date.quarter
 
         let endTrimester: number = 1
         if (quarter === 1) {
@@ -51,8 +88,7 @@ class DateTrimesterService {
             endTrimester = 12
         }
 
-        return DateTime.fromJSDate(new Date(date.getFullYear(), endTrimester + 1, 0))
-
+        return DateTime.fromJSDate(new Date(date.year, endTrimester + 1, 0))
     }
 
     getStartAndEndTrimester(date: Date): {start: DateTime, end: DateTime}
